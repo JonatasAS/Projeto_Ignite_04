@@ -1,4 +1,4 @@
-import { GetStaticProps } from "next"
+import { GetStaticPaths, GetStaticProps } from "next"
 import { useRouter } from "next/router"
 import Stripe from "stripe"
 
@@ -17,7 +17,12 @@ interface ProductProps {
   }
 }
 
-export default function Product( {product } : ProductProps) {
+export default function Product( { product } : ProductProps) {
+/*   const {isFallback} = useRouter()
+
+  if(isFallback) {
+    return <p>Loading...</p>
+  } */
 
   return(
     <ProductContainer>
@@ -38,8 +43,22 @@ export default function Product( {product } : ProductProps) {
   )
 }
 
+export const getStaticPaths: GetStaticPaths = async () => {
+  return {
+    paths: [
+      { params: {id: 'prod_PBnVXXmexmTInn'}}
+    ],
+    fallback: 'blocking',
+  }
+}
+
 export const getStaticProps: GetStaticProps<any, { id: string }> = async ({ params }) => {
-  const productId = params.id;
+  if(!params) {
+    return {
+      notFound: true // caso o paramentro não exista retorna um 404
+    }
+  }
+  const productId = params.id // erro no params caso não resolva no arquivo tsconfig, a propriedade strict alterar seu valor para false, retirando verificações estritas do TS
 
   const product = await stripe.products.retrieve(productId, {
     expand: ['default_price'],
