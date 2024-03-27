@@ -8,10 +8,10 @@
 -  Javascript/Typescript
 -  Radix
 -  Axios
--  Zod
 -  Next
 -  Stripe
 -  Stitches
+-  keen-slider
 
 ## Ignite Shop
-O Ignite Shop tenta representa de um forma simples e conceitual uma pagina de e-commerce
+O Ignite Shop tenta representarn de um forma simples e conceitual uma pagina de e-commerce
